@@ -1,0 +1,32 @@
+# --
+# CustomerFooter.dtl - provides global HTML footer
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# --
+# $Id: CustomerFooter.dtl,v 1.13 2009/02/16 11:07:25 tr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!-- start CI layout -->
+</td>
+</tr>
+<tr>
+<td class="footer">FOOTER</td>
+<td class="footer">FOOTER2</td>
+</tr>
+</table>
+<!-- end CI layout -->
+<!-- start footer -->
+<a name="end"></a>
+<table border="0" width="880" cellspacing="0" cellpadding="3">
+<tr>
+<td align="right" class="small">
+$Text{"Powered by"} <a href="http://otrs.org/" class="small">$Config{"Product"} $Config{"Version"}</a>
+</td>
+</tr>
+</table>
+</body>
+</html>
+<!-- end footer -->

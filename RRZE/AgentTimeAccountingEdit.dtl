@@ -1,0 +1,268 @@
+# --
+# AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# --
+# $Id: AgentTimeAccountingEdit.dtl,v 1.27 2009/07/12 17:30:41 tt Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function submit_compose() {
+    for (var Counter = 1;Counter < 10; Counter++) {
+        var Remark  = 'Remark['    + Counter + ']';
+        var Project = 'ProjectID[' + Counter + ']';
+
+        if ( document.compose.elements[Project].value ) {
+
+            var RemarkCheck = project_remark_check(Project);
+
+            if (   document.compose.elements[Project].value
+                && RemarkCheck
+                &&  (!document.compose.elements[Remark].value
+                        || document.compose.elements[Remark].value.length < 8
+                    )
+            ) {
+                alert('$JSText{"Please add a remark with more than 8 characters!"}');
+                document.compose.elements[Remark].focus();
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function project_remark_check(Project) {
+
+    var reg = /^($QData{"RemarkRegExp"})$/;
+
+    if ( reg.test(document.compose.elements[Project].value) == false ) {
+        return false;
+    }
+    return true;
+}
+
+// This funciton make the invisible input fields (9 - 16) visible
+
+function MoreInputFields() {
+    if (document.getElementById) {
+        document.getElementById("MoreFields[9]").style.visibility = "visible";
+        document.getElementById("MoreFields[10]").style.visibility = "visible";
+        document.getElementById("MoreFields[11]").style.visibility = "visible";
+        document.getElementById("MoreFields[12]").style.visibility = "visible";
+        document.getElementById("MoreFields[13]").style.visibility = "visible";
+        document.getElementById("MoreFields[14]").style.visibility = "visible";
+        document.getElementById("MoreFields[15]").style.visibility = "visible";
+        document.getElementById("MoreFields[16]").style.visibility = "visible";
+        document.getElementById("Link").style.visibility = "collapse";
+    }
+}
+
+//-->
+</script>
+
+<style type="text/css">
+.ProjectSelection { width:450px;}
+.ActionSelection { width:300px;}
+</style>
+
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td colspan="3" class="mainhead">
+      $Env{"Box0"}$Text{"Edit time record"}$Env{"Box1"}
+    </td>
+  </tr>
+<!-- dtl:block:Overview -->
+  <tr>
+    <td colspan="3" class="menu">
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$LQData{"Year"}&Month=$LQData{"Month"}" class="menuitem">$Text{"Overview"}</a>
+<!-- dtl:block:CreateProject -->
+      -
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=ProjectSetting" class="menuitem">
+      $Text{"Project settings"}
+      </a>
+<!-- dtl:block:CreateProject -->
+    </td>
+  </tr>
+<!-- dtl:block:Overview -->
+  <tr>
+    <td class="mainbody">
+      <br>
+      <table border="0" width="700" align="center" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+            <table class="contentbody" border="0" width="100%" cellspacing="0" cellpadding="4">
+              <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose2">
+                <input type="hidden" name="Action"    value="$Env{"Action"}">
+                <input type="hidden" name="Subaction" value="Edit">
+                <tr>
+                  <td colspan="2" class="contenthead">$Text{"Date navigation"}</td>
+                </tr>
+                <tr class="contentvalue">
+                  <td>
+                    $Data{"Date"}
+                    <input class="button" type="submit" value="$Text{"Submit"}">
+                  </td>
+                  <td>
+                    <table>
+                      <tr>
+                        <td>
+                          $QData{"Year"}-$QData{"Month"}-$QData{"Day"}&nbsp;
+                        </td>
+                        <td>
+                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$LQData{"YearBack"}&Month=$LQData{"MonthBack"}&Day=$LQData{"DayBack"}"><img border="0" src="$Config{"Frontend::ImagePath"}left-big.png" alt="$Text{"One day back"}"></a>
+                          &nbsp;
+                        </td>
+                        <td>
+                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$LQData{"YearNext"}&Month=$LQData{"MonthNext"}&Day=$LQData{"DayNext"}"><img border="0" src="$Config{"Frontend::ImagePath"}right-big.png" alt="$Text{"Next day"}"></a>
+                          &nbsp;
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+<!-- dtl:block:IncompleteText -->
+                <tr class="contentvalue">
+                  <td colspan="2">
+                    $Text{"Days without entries"}:
+<!-- dtl:block:IncompleteWorkingDays -->
+                    &nbsp;
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$LQData{"Year"}&Month=$LQData{"Month"}&Day=$LQData{"Day"}">
+                    $Data{"BoldStart"}
+                    $QData{"Year"}-$QData{"Month"}-$QData{"Day"}
+                    $Data{"BoldEnd"}
+                    </a>
+<!-- dtl:block:IncompleteWorkingDays -->
+                    &nbsp;
+                  </td>
+                </tr>
+<!-- dtl:block:IncompleteText -->
+                <tr>
+                  <td colspan="2" class="contentfooter">&nbsp;</td>
+                </tr>
+              </form>
+            </table>
+            <br>
+            <table border="0" width="100%" cellspacing="0" cellpadding="4">
+              <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
+                <input type="hidden" name="Action"    value="$Env{"Action"}">
+                <input type="hidden" name="Subaction" value="Edit">
+                <input type="hidden" name="Status"    value="Action">
+                <input type="hidden" name="Year"      value="$QData{"Year"}">
+                <input type="hidden" name="Month"     value="$QData{"Month"}">
+                <input type="hidden" name="Day"       value="$QData{"Day"}">
+                <tr>
+                  <td class="contenthead">
+                    $Text{"Date"}: $Text{"$QData{"Weekday_to_Text"}"} $QData{"Year"}-$QData{"Month"}-$QData{"Day"}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="contentbody">
+                    <table border="0" cellspacing="0" cellpadding="3" align="center">
+<!-- dtl:block:UnitBlock -->
+                      <tr class="contentkey">
+                        <td>$Text{"Project"}<span class="required">*</span></td>
+                        <td>$Text{"Task"}<span class="required">*</span></td>
+                        <td>$Text{"Remark"}</td>
+                        <td>$Text{"Start"} (HH:MM)<span class="$QData{"ClassTime"}">*</span></td>
+                        <td>$Text{"End"} (HH:MM)<span class="$QData{"ClassTime"}">*</span></td>
+                        <td>$Text{"Period"}<span class="footnote">$QData{"PeriodNote"}</span></td>
+                      </tr>
+<!-- dtl:block:Unit -->
+                      <tr class="contentvalue" id="MoreFields[$QData{"ID"}]"  style="visibility:$QData{"Visibility"}">
+                        <td>$Data{"ProjectOption"}</td>
+                        <td>$Data{"ActionOption"}</td>
+                        <td><input type="text" name="Remark[$QData{"ID"}]"    value="$QData{"Remark"}"    size="35"></td>
+                        <td><input type="text" name="StartTime[$QData{"ID"}]" value="$QData{"StartTime"}" size="7"></td>
+                        <td><input type="text" name="EndTime[$QData{"ID"}]"   value="$QData{"EndTime"}"   size="7"></td>
+<!-- dtl:block:UnitInputPeriod -->
+                        <td align="$QData{"TextPosition"}">
+                          <input type="text" name="Period[$QData{"ID"}]" value="$QData{"Period"}" size="7">
+                        </td>
+<!-- dtl:block:UnitInputPeriod -->
+<!-- dtl:block:UnitPeriodWithoutInput -->
+                        <td align="$QData{"TextPosition"}">$QData{"Period"}</td>
+<!-- dtl:block:UnitPeriodWithoutInput -->
+                      </tr>
+<!-- dtl:block:UnitRequired -->
+                      <tr class="required">
+                        <td colspan="6">
+                          $Text{"$QData{"Description"}"}
+                        </td>
+                      </tr>
+<!-- dtl:block:UnitRequired -->
+<!-- dtl:block:UnitReadonly -->
+                      <tr class="readonly">
+                        <td colspan="6">
+                          $Text{"$QData{"Description"}"}
+                        </td>
+                      </tr>
+<!-- dtl:block:UnitReadonly -->
+<!-- dtl:block:Unit -->
+                      <tr class="contentvalue" id="Link">
+                        <td colspan="5">
+                          <a href="javascript:MoreInputFields()" style="visibility:$QData{"LinkVisibility"}">
+                          <img border="0" src="$Config{"Frontend::ImagePath"}down-big.png" alt="$Text{"More input fields"}">
+                          </a>
+                        </td>
+                      </tr>
+<!-- dtl:block:UnitBlock -->
+                      <tr>
+                        <td class="contentkey" colspan="4">
+<!-- dtl:block:OtherTimes -->
+                          <input type="checkbox" value="1" name="LeaveDay" $Data{"LeaveDay"}>$Text{"On vacation"}&nbsp;
+                          <input type="checkbox" value="1" name="Sick"     $Data{"Sick"}>$Text{"On sick leave"}&nbsp;
+                          <input type="checkbox" value="1" name="Overtime" $Data{"Overtime"}>$Text{"On overtime leave"}
+<!-- dtl:block:OtherTimes -->
+                          &nbsp;
+                        </td>
+<!-- dtl:block:Total -->
+                        <td>$Text{"Total"}:</td>
+                        <td align="$QData{"TextPosition"}">$QData{"Total"}&nbsp;</td>
+<!-- dtl:block:Total -->
+                      </tr>
+<!-- dtl:block:Required -->
+                      <tr>
+                        <td colspan="6">
+                          <div class="required">$Text{"$QData{"Description"}"}</div>
+                        </td>
+                      </tr>
+<!-- dtl:block:Required -->
+<!-- dtl:block:Readonly -->
+                      <tr>
+                        <td colspan="6">
+                          <div class="readonly">$Text{"$QData{"Description"}"}</div>
+                        </td>
+                      </tr>
+<!-- dtl:block:Readonly -->
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="contentfooter">
+                    <input class="button" type="submit" value="$Text{"Submit"}" onclick="return submit_compose();">
+                    <input class="button" type="submit" value="$Text{"Delete"}" name="Delete">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="required">* $Text{"Required Field"}</div>
+<!-- dtl:block:FootNote -->
+                    <div class="footnote">* $Text{"You have to insert a start and an end time or a period"}</div>
+<!-- dtl:block:FootNote -->
+                    <div class="footnote">* $Text{"If you select "Miscellaneous (misc)" the task, please explain this in the remarks field"}</div>
+                  </td>
+                </tr>
+              </form>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <br>
+    </td>
+  </tr>
+</table>

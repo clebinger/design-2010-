@@ -1,0 +1,27 @@
+# --
+# AJAX.dtl - provides AJAX functions
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# --
+# $Id: AJAX.dtl,v 1.18 2009/03/06 20:33:20 martin Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+# use prototype lib
+<script src="$Config{"Frontend::JavaScriptPath"}prototype.js" type="text/javascript"></script>
+# use lib
+<script src="$Config{"Frontend::JavaScriptPath"}otrs.js" type="text/javascript"></script>
+
+# fill init/needed config options
+<script language="JavaScript" type="text/javascript">
+    OTRS.ConfigSet( 'Baselink', '$Env{"Baselink"}' );
+    OTRS.ConfigSet( 'Action', '$Env{"Action"}');
+    OTRS.ConfigSet( 'SessionIDCookie', '$Env{"SessionIDCookie"}' );
+    OTRS.ConfigSet( 'SessionName', '$Config{"SessionName"}' );
+    OTRS.ConfigSet( 'SessionID', '$Env{"SessionID"}' );
+    OTRS.ConfigSet( 'CustomerPanelSessionName', '$Config{"CustomerPanelSessionName"}' );
+    OTRS.ConfigSet( 'Images', '$Config{"Frontend::ImagePath"}' );
+    AJAXInit();
+</script>

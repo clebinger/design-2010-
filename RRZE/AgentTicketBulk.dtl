@@ -1,0 +1,196 @@
+# --
+# AgentTicketBulk.dtl - provides HTML form for bulk mask
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# --
+# $Id: AgentTicketBulk.dtl,v 1.20.2.3 2009/10/01 14:13:32 ub Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!-- dtl:block:BulkAction -->
+<script language="JavaScript" type="text/javascript">
+<!--
+function submit_compose() {
+    // if RichText is enabled, update the hidden textarea now for the body content check to work correctly
+    if (typeof RichTextUpdateLinkedField == 'function') {
+        RichTextUpdateLinkedField();
+    }
+
+    if (document.compose.Subject.value == "") {
+        alert('$JSText{"A message should have a subject!"}');
+        document.compose.Subject.focus();
+        return false;
+    }
+    else if (document.compose.Body.value == "") {
+        alert('$JSText{"A message should have a body!"}');
+        if (typeof RichTextUpdateLinkedField == 'function') {
+            RichTextFocus();
+        }
+        else {
+            document.compose.Body.focus();
+        }
+        return false;
+    }
+
+<!-- dtl:block:TimeUnitsJs -->
+    if (document.compose.TimeUnits.value != "") {
+        var reg = /^-{0,1}\d+?((\.|,){0,1}\d+?){0,1}$/;
+        if (reg.test(document.compose.TimeUnits.value) == false) {
+            alert('$JSText{"Invalid time!"}');
+            document.compose.TimeUnits.focus();
+            return false;
+        }
+    }
+    else if (document.compose.TimeUnits.value == "" && $Config{"Ticket::Frontend::NeedAccountedTime"}) {
+        alert('$JSText{"You need to account time!"}');
+        document.compose.TimeUnits.focus();
+        return false;
+    }
+<!-- dtl:block:TimeUnitsJs -->
+    return true;
+}
+//-->
+</script>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function SpellCheckSubmit() {
+    document.spelling.Body.value = document.compose.Body.value;
+    window.open('', 'spelling', 'toolbar=no,location=no,status=yes,scrollbars=yes,resizable=yes,width=700,height=550,left=100,top=100');
+    document.spelling.submit()
+}
+// -->
+</script>
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+    <tr>
+        <td class="mainhead">
+            $Env{"Box0"}$Text{"Ticket Bulk Action"}$Env{"Box1"}
+        </td>
+    </tr>
+    <tr>
+        <td class="menu">
+            <a href="$Env{"Baselink"}$Env{"LastScreenView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" class="mainbody">
+            <br/>
+            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
+                <input type="hidden" name="Action" value="$Env{"Action"}"/>
+                <input type="hidden" name="Subaction" value="Do"/>
+                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
+                    <tr>
+                        <td colspan="2" class="contenthead">$Text{"Options"}</td>
+                    </tr>
+                    <tr>
+                        <td class="contentbody">
+                            $Data{"TicketIDHidden"}
+                            <table border="0" width="100%">
+                                <tr>
+                                    <td width="15%" class="contentkey">$Text{"Subject"}:</td>
+                                    <td width="85%" class="contentvalue">
+                                        <input type="text" name="Subject" value="$Text{"$Config{"Ticket::Frontend::NoteSubject"}"}" size="70"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">$Text{"Options"}:</td>
+                                    <td class="contentvalue">
+<!-- dtl:block:SpellCheck -->
+                                        $Env{"Box0"}<a href="" onclick="SpellCheckSubmit(); return false;" onmouseover="window.status='$JSText{"Spell Check"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}spell.png">$Text{"Spell Check"}</a>$Env{"Box1"}
+<!-- dtl:block:SpellCheck -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">$Text{"Text"}:</td>
+                                    <td class="contentvalue">
+                                        <div class="yui-skin-sam">
+<!-- dtl:block:RichText -->
+$Include{"RichTextEditor"}
+<!-- dtl:block:RichText -->
+                                            <textarea id="RichText" name="Body" rows="16" cols="$Config{"Ticket::Frontend::TextAreaNote"}" wrap="$Env{"BrowserWrap"}">$QData{"NoteText"}</textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">$Text{"Note type"}:</td>
+                                    <td class="contentvalue">$Data{"NoteStrg"}</td>
+                                </tr>
+<!-- dtl:block:State -->
+                                <tr>
+                                    <td width="20%" class="contentkey">$Text{"Next state"}:</td>
+                                    <td width="80%" class="contentvalue">$Data{"NextStatesStrg"}</td>
+                                </tr>
+<!-- dtl:block:StatePending -->
+                                <tr>
+                                    <td class="contentkey">$Text{"Pending date"}:</td>
+                                    <td class="contentvalue">$Data{"DateString"} <font color="red" size="-2">$Text{"$Data{"Date invalid"}"}</font></td>
+                                </tr>
+<!-- dtl:block:StatePending -->
+<!-- dtl:block:State -->
+<!-- dtl:block:Owner -->
+                                <tr>
+                                    <td class="contentkey">$Text{"Owner"}:</td>
+                                    <td class="contentvalue">$Data{"OwnerStrg"}</td>
+                                </tr>
+<!-- dtl:block:Owner -->
+<!-- dtl:block:Responsible -->
+                                <tr>
+                                    <td class="contentkey">$Text{"Responsible"}:</td>
+                                    <td class="contentvalue">$Data{"ResponsibleStrg"}</td>
+                                </tr>
+<!-- dtl:block:Responsible -->
+                                <tr>
+                                    <td class="contentkey">$Text{"Queue"}:</td>
+                                    <td class="contentvalue">$Data{"MoveQueuesStrg"}</td>
+                                </tr>
+<!-- dtl:block:Priority -->
+                                <tr>
+                                    <td class="contentkey">$Text{"Priority"}:</td>
+                                    <td class="contentvalue">$Data{"PriorityStrg"}</td>
+                                </tr>
+<!-- dtl:block:Priority -->
+                                <tr>
+                                    <td class="contentkey">$Text{"Merge"}:</td>
+                                    <td class="contentvalue"> <input type="radio" name="MergeToSelection" value="MergeTo"/> $Text{"Merge to"} <input type="text" size="30" name="MergeTo" value="$QData{"MergeTo"}"/> <input type="radio" name="MergeToSelection" value="MergeToOldest"/> $Text{"Merge to oldest"} </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">$Text{"Link together"}:</td>
+                                    <td class="contentvalue">$Data{"LinkTogetherYesNoOption"}</td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">$Text{"Link to Parent"}:</td>
+                                    <td class="contentvalue"><input type="text" size="30" name="LinkTogetherParent" value="$QData{"LinkTogetherParent"}"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">$Text{"Unlock Tickets"}:</td>
+                                    <td class="contentvalue">$Data{"UnlockYesNoOption"}</td>
+                                </tr>
+<!-- dtl:block:TimeUnits -->
+                                <tr>
+                                    <td class="contentkey">$Text{"Time units"}$Text{"$Config{"Ticket::Frontend::TimeUnits"}"}:</td>
+                                    <td class="contentvalue"><input type="text" name="TimeUnits" value="$QData{"TimeUnits"}" size="3"/></td>
+                                </tr>
+<!-- dtl:block:TimeUnits -->
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="contentfooter">
+                            <input class="button" id="submitRichText" accesskey="g" type="submit" value="$Text{"Submit"}" onclick="return submit_compose();"/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <br/>
+            <form action="$Env{"CGIHandle"}" method="post" name="spelling" target="spelling">
+                <input type="hidden" name="Action" value="AgentSpelling"/>
+                <input type="hidden" name="Body" value=""/>
+                <input type="hidden" name="spell_lang" value=""/>
+            </form>
+        </td>
+    </tr>
+</table>
+<!-- dtl:block:BulkAction -->

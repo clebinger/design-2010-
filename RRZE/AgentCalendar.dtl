@@ -1,0 +1,553 @@
+# --
+# AgentCalendar.dtl - provides HTML form for AgentCalendar
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# --
+# $Id: AgentCalendar.dtl,v 1.16 2009/04/23 08:25:08 tr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!-- dtl:block:Create -->
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="mainhead">
+      $Env{"Box0"}$Text{"Calendar"}$Env{"Box1"}
+    </td>
+  </tr>
+  <tr>
+    <td class="mainbody">
+      <br>
+      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
+        <input type="hidden" name="Action" value="$Env{"Action"}">
+        <input type="hidden" name="Subaction" value="CreateAction">
+        <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
+          <tr>
+            <td colspan="2" class="contenthead">$Text{"New"}</td>
+          </tr>
+          <tr>
+            <td class="contentbody">
+              <table border="0" width="100%">
+                <tr>
+                  <td width="20%" class="contentkey">$Text{"Title"}: </td>
+                  <td width="80%" class="contentvalue"> <input type="text" name="Title" value="$QData{"Title"}" size="70"></td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Location"}: </td>
+                  <td class="contentvalue"> <input type="text" name="Location" value="$QData{"Location"}" size="70"></td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Description"}: </td>
+                  <td class="contentvalue"> <textarea name="Description" rows="6" cols="70" wrap="$Env{"BrowserWrap"}">$QData{"Description"}</textarea></td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Start"}: </td>
+                  <td class="contentvalue"> $Data{"StartDateString"}</td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"End"}: </td>
+                  <td class="contentvalue"> $Data{"EndDateString"}</td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"State"}: </td>
+                  <td class="contentvalue"> $Data{"State"}</td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Sequence"}: </td>
+                  <td class="contentvalue">
+                    <table border="0">
+                      <tr>
+                        <td>$Text{"None"}: </td>
+                        <td><input type="radio" name="SequenceType" value="" $Data{"SequenceType::None"}></td>
+                      </tr>
+                      <tr>
+                        <td>$Text{"Weekly"}: </td>
+                        <td>
+$Text{"Mon"}<input type="radio" name="SequenceType" value="Weekly::Mon" $Data{"SequenceType::Weekly::Mon"}>
+$Text{"Tue"}<input type="radio" name="SequenceType" value="Weekly::Tue" $Data{"SequenceType::Weekly::Tue"}>
+$Text{"Wed"}<input type="radio" name="SequenceType" value="Weekly::Wed" $Data{"SequenceType::Weekly::Wed"}>
+$Text{"Thu"}<input type="radio" name="SequenceType" value="Weekly::Thu" $Data{"SequenceType::Weekly::Thu"}>
+$Text{"Fri"}<input type="radio" name="SequenceType" value="Weekly::Fri" $Data{"SequenceType::Weekly::Fri"}>
+$Text{"Sat"}<input type="radio" name="SequenceType" value="Weekly::Sat" $Data{"SequenceType::Weekly::Sat"}>
+$Text{"Sun"}<input type="radio" name="SequenceType" value="Weekly::Sun" $Data{"SequenceType::Weekly::Sun"}>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>$Text{"Monthly"}: </td>
+                        <td>
+$Data{"MonthlyString"}
+$Text{"Mon"}<input type="radio" name="SequenceType" value="Monthly::Mon" $Data{"SequenceType::Monthly::Mon"}>
+$Text{"Tue"}<input type="radio" name="SequenceType" value="Monthly::Tue" $Data{"SequenceType::Monthly::Tue"}>
+$Text{"Wed"}<input type="radio" name="SequenceType" value="Monthly::Wed" $Data{"SequenceType::Monthly::Wed"}>
+$Text{"Thu"}<input type="radio" name="SequenceType" value="Monthly::Thu" $Data{"SequenceType::Monthly::Thu"}>
+$Text{"Fri"}<input type="radio" name="SequenceType" value="Monthly::Fri" $Data{"SequenceType::Monthly::Fri"}>
+$Text{"Sat"}<input type="radio" name="SequenceType" value="Monthly::Sat" $Data{"SequenceType::Monthly::Sat"}>
+$Text{"Sun"}<input type="radio" name="SequenceType" value="Monthly::Sun" $Data{"SequenceType::Monthly::Sun"}>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>$Text{"Yearly"}: </td>
+                        <td><input type="radio" name="SequenceType" value="Yearly" $Data{"SequenceType::Yearly"}></td>
+                      </tr>
+                      <tr>
+                        <td>$Text{"Sequence End"}: </td>
+                        <td>$Data{"SequenceEndDateString"}</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Participant"}: </td>
+                  <td class="contentvalue"> $Data{"ParticipantList"}</td>
+                </tr>
+#                <tr>
+#                  <td class="contentkey">$Text{"Reminder"}: </td>
+#                  <td class="contentvalue"> $Data{"Reminder"}</td>
+#                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="contentfooter">
+              <input class="button" accesskey="g" type="submit" value="$Text{"New"}">
+            </td>
+          </tr>
+        </table>
+      </form>
+      <br>
+    </td>
+  </tr>
+</table>
+<!-- dtl:block:Create -->
+<!-- dtl:block:Update -->
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="mainhead">
+      $Env{"Box0"}$Text{"Calendar"}$Env{"Box1"}
+    </td>
+  </tr>
+  <tr>
+    <td class="mainbody">
+      <br>
+      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
+        <input type="hidden" name="Action" value="$Env{"Action"}">
+        <input type="hidden" name="Subaction" value="UpdateAction">
+        <input type="hidden" name="EventID" value="$QData{"EventID"}">
+        <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
+          <tr>
+            <td colspan="2" class="contenthead">$Text{"Edit"}</td>
+          </tr>
+          <tr>
+            <td class="contentbody">
+              <table border="0" width="100%">
+                <tr>
+                  <td width="20%" class="contentkey">$Text{"Title"}: </td>
+                  <td width="80%" class="contentvalue"> <input type="text" name="Title" value="$QData{"Title"}" size="70"></td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Location"}: </td>
+                  <td class="contentvalue"> <input type="text" name="Location" value="$QData{"Location"}" size="70"></td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Description"}: </td>
+                  <td class="contentvalue"> <textarea name="Description" rows="6" cols="70" wrap="$Env{"BrowserWrap"}">$QData{"Description"}</textarea></td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Start"}: </td>
+                  <td class="contentvalue"> $Data{"StartDateString"}</td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"End"}: </td>
+                  <td class="contentvalue"> $Data{"EndDateString"}</td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"State"}: </td>
+                  <td class="contentvalue"> $Data{"StateString"}</td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Sequence"}: </td>
+                  <td class="contentvalue">
+                    <table border="0">
+                      <tr>
+                        <td>$Text{"None"}: </td>
+                        <td><input type="radio" name="SequenceType" value="" $Data{"SequenceType::None"}></td>
+                      </tr>
+                      <tr>
+                        <td>$Text{"Weekly"}: </td>
+                        <td>
+$Text{"Mon"}<input type="radio" name="SequenceType" value="Weekly::Mon" $Data{"SequenceType::Weekly::Mon"}>
+$Text{"Tue"}<input type="radio" name="SequenceType" value="Weekly::Tue" $Data{"SequenceType::Weekly::Tue"}>
+$Text{"Wed"}<input type="radio" name="SequenceType" value="Weekly::Wed" $Data{"SequenceType::Weekly::Wed"}>
+$Text{"Thu"}<input type="radio" name="SequenceType" value="Weekly::Thu" $Data{"SequenceType::Weekly::Thu"}>
+$Text{"Fri"}<input type="radio" name="SequenceType" value="Weekly::Fri" $Data{"SequenceType::Weekly::Fri"}>
+$Text{"Sat"}<input type="radio" name="SequenceType" value="Weekly::Sat" $Data{"SequenceType::Weekly::Sat"}>
+$Text{"Sun"}<input type="radio" name="SequenceType" value="Weekly::Sun" $Data{"SequenceType::Weekly::Sun"}>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>$Text{"Monthly"}: </td>
+                        <td>
+$Data{"MonthlyString"}
+$Text{"Mon"}<input type="radio" name="SequenceType" value="Monthly::Mon" $Data{"SequenceType::Monthly::Mon"}>
+$Text{"Tue"}<input type="radio" name="SequenceType" value="Monthly::Tue" $Data{"SequenceType::Monthly::Tue"}>
+$Text{"Wed"}<input type="radio" name="SequenceType" value="Monthly::Wed" $Data{"SequenceType::Monthly::Wed"}>
+$Text{"Thu"}<input type="radio" name="SequenceType" value="Monthly::Thu" $Data{"SequenceType::Monthly::Thu"}>
+$Text{"Fri"}<input type="radio" name="SequenceType" value="Monthly::Fri" $Data{"SequenceType::Monthly::Fri"}>
+$Text{"Sat"}<input type="radio" name="SequenceType" value="Monthly::Sat" $Data{"SequenceType::Monthly::Sat"}>
+$Text{"Sun"}<input type="radio" name="SequenceType" value="Monthly::Sun" $Data{"SequenceType::Monthly::Sun"}>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>$Text{"Yearly"}: </td>
+                        <td><input type="radio" name="SequenceType" value="Yearly" $Data{"SequenceType::Yearly"}></td>
+                      </tr>
+                      <tr>
+                        <td>$Text{"Sequence End"}: </td>
+                        <td>$Data{"SequenceEndDateString"}</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="contentkey">$Text{"Participant"}: </td>
+                  <td class="contentvalue"> $Data{"ParticipantList"}</td>
+                </tr>
+#    <tr>
+#      <td class="contentkey">$Text{"Reminder"}: </td>
+#      <td class="contentvalue"> $Data{"ReminderString"}</td>
+#    </tr>
+<!-- dtl:block:UpdateCreated -->
+                <tr>
+                  <td class="contentkey">$Text{"Created"}: </td>
+                  <td class="contentvalue"> $TimeShort{"$Data{"CreateTime"}"} $QData{"UserFirstname"} $QData{"UserLastname"} ($QData{"UserLogin"})</td>
+                </tr>
+<!-- dtl:block:UpdateCreated -->
+<!-- dtl:block:UpdateChanged -->
+                <tr>
+                  <td class="contentkey">$Text{"Changed"}: </td>
+                  <td class="contentvalue"> $TimeShort{"$Data{"ChangeTime"}"} $QData{"UserFirstname"} $QData{"UserLastname"} ($QData{"UserLogin"})</td>
+                </tr>
+<!-- dtl:block:UpdateChanged -->
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="contentfooter">
+              <input class="button" accesskey="d" type="submit" name="Cancel" value="$Text{"Delete"}">
+              <input class="button" accesskey="g" type="submit" name="Submit" value="$Text{"Submit"}">
+            </td>
+          </tr>
+        </table>
+      </form>
+      <br>
+    </td>
+  </tr>
+</table>
+<!-- dtl:block:Update -->
+<!-- dtl:block:Cancel -->
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="mainhead">
+      $Env{"Box0"}$Text{"Delete"}: $Text{"Event"} $Env{"Box1"}
+    </td>
+  </tr>
+  <tr>
+    <td class="menu">
+      <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Update&EventID=$QData{"EventID"}" class="menuitem">$Text{"Back"}</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="mainbody">
+      <br>
+      <table border="0" width="350" align="center" cellspacing="0" cellpadding="4">
+        <tr>
+          <td colspan="2" class="contenthead">$Text{"Options"}</td>
+        </tr>
+        <tr>
+          <td class="contentbody">
+            <table border="0" cellspacing="0" cellpadding="3">
+              <tr>
+                <td width="25%" class="contentkey">$Text{"Title"}:</td>
+                <td width="75%" class="contentvalue">$QData{"Title"}</td>
+              </tr>
+              <tr>
+                <td colspan="2">&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2" class="contentkey">$Text{"Do you really want to delete this Object?"}:</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" class="contentfooter">
+            <table width="100%" border="0" cellspacing="0" cellpadding="1">
+              <tr>
+                <td class="contentfooter">
+                  <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="Action" value="$Env{"Action"}">
+                    <input type="hidden" name="Subaction" value="Update">
+                    <input type="hidden" name="EventID" value="$QData{"EventID"}">
+                    <input class="button" type="submit" value="$Text{"No"}">
+                  </form>
+                </td>
+                <td width="10" class="contentfooter">
+                  <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="Action" value="$Env{"Action"}">
+                    <input type="hidden" name="Subaction" value="CancelAction">
+                    <input type="hidden" name="EventID" value="$QData{"EventID"}">
+                    <input class="button" type="submit" value="$Text{"Yes"}">
+                  </form>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <br>
+    </td>
+  </tr>
+</table>
+<!-- dtl:block:Cancel -->
+<!-- dtl:block:Overview -->
+<style type="text/css">
+<!--
+.today {
+font-family:Geneva,Helvetica,Arial,sans-serif;
+font-size:8pt;
+vertical-align:top;
+background-color:#FFCC00;
+color:#000000;
+}
+.todaynotcounted {
+font-family:Geneva,Helvetica,Arial,sans-serif;
+font-size:8pt;
+vertical-align:top;
+background-color:#DFBC00;
+color:#000000;
+}
+.sunday {
+font-family:Geneva,Helvetica,Arial,sans-serif;
+font-size:8pt;
+vertical-align:top;
+background-color:#ffe0e0;
+color:#000000;
+}
+.saturday {
+font-family:Geneva,Helvetica,Arial,sans-serif;
+font-size:8pt;
+vertical-align:top;
+background-color:#ffe0e0;
+color:#000000;
+}
+.holiday {
+font-family:Geneva,Helvetica,Arial,sans-serif;
+font-size:8pt;
+vertical-align:top;
+background-color:#EBCCCC;
+color:#000000;
+}
+.event {
+font-family:Geneva,Helvetica,Arial,sans-serif;
+font-size:8pt;
+vertical-align:top;
+background-color:#FFCC00;
+color:0000000;
+}
+.eventnotcounted {
+font-family:Geneva,Helvetica,Arial,sans-serif;
+font-size:8pt;
+vertical-align:top;
+background-color:#F2A000;
+color:#000000;
+}
+.weekday {
+font-family:Geneva,Helvetica,Arial,sans-serif;
+font-size:8pt;
+vertical-align:top;
+background-color:#E5F0FF;
+color:#000000;
+}
+.weekdaynotcounted {
+font-family:Geneva,Helvetica,Arial,sans-serif;
+font-size:8pt;
+vertical-align:top;
+background-color:#D0E0EA;
+color:#000000;
+}
+.vacation {
+font-family:Geneva,Helvetica,Arial,sans-serif;
+font-size:8pt;
+vertical-align:top;
+#        background-color:#cdc718;
+#        background-color:#a8bfea;
+background-color:#becde8;
+}
+.meeting {
+font-family:Geneva,Helvetica,Arial,sans-serif;
+font-size:8pt;
+vertical-align:top;
+#        background-color:#7baede;
+background-color:#ffb7b7;
+}
+.public {
+font-family:Geneva,Helvetica,Arial,sans-serif;
+font-size:8pt;
+vertical-align:top;
+background-color:#FFCC00;
+}
+.private {
+font-family:Geneva,Helvetica,Arial,sans-serif;
+font-size:8pt;
+vertical-align:top;
+background-color:#cdcdcd;
+}
+//-->
+</style>
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="mainhead">
+      $Env{"Box0"}$Text{"Calendar"}$Env{"Box1"}
+    </td>
+  </tr>
+<!-- dtl:block:OverviewMenu -->
+  <tr>
+    <td class="menu">
+      <a href="$Env{"Baselink"}$Env{"RequestedURL"}&Print=1" target="print">$Text{"Print"}</a>
+<!-- dtl:block:OverviewMenuAll -->
+      - <a href="$Env{"Baselink"}$Data{"RequestedURL"}&Members=All">$Text{"All Events"}</a>
+<!-- dtl:block:OverviewMenuAll -->
+<!-- dtl:block:OverviewMenuMy -->
+      - <a href="$Env{"Baselink"}$Data{"RequestedURL"}&Members=My">$Text{"My Events"}</a>
+<!-- dtl:block:OverviewMenuMy -->
+    </td>
+  </tr>
+<!-- dtl:block:OverviewMenu -->
+  <tr>
+    <td class="mainbody">
+      <center>
+<!-- dtl:block:OverviewNavBar -->
+      <a href="$Env{"Baselink"}Action=AgentCalendar&Month=$LQData{"LastMonth"}&Year=$LQData{"LastYear"}&Day=$LQData{"LastDay"}">&lt;&lt;</a>
+      <a href="$Env{"Baselink"}Action=AgentCalendar&Month=$LQData{"NextMonth"}&Year=$LQData{"NextYear"}&Day=$LQData{"NextDay"}">&gt;&gt;</a>
+<!-- dtl:block:OverviewNavBar -->
+      <table border="0" cellspacing="2" cellpadding="2" width="860">
+        <tr valign="top">
+<!-- dtl:block:Month-->
+          <td width="33%">
+            <table border="0" cellspacing="2" cellpadding="1" width="100%">
+              <tr>
+                <th colspan="3" class="contenthead">$Text{"$QData{"MonthString"}"} $QData{"Year"}</th>
+              </tr>
+<!-- dtl:block:MonthDay -->
+              <tr>
+                <td class="$QData{"Class"}">
+# check rw/ro access
+                  <dtl set $Data{"New"} = "$QData{"Day"}">
+                  <dtl if ($Env{"AccessRw"} eq "1") { $Data{"New"} = "<a href="$Env{"Baselink"}Action=AgentCalendar&Subaction=Create&Year=$QData{"Year"}&Month=$QData{"Month"}&Day=$QData{"Day"}" title="$Text{"New Event..."}">$Text{"$QData{"Day"}"}</a>"; }>
+                  $Data{"New"}
+                </td>
+                <td class="$QData{"Class"}">$Text{"$QData{"DayString"}"} </td>
+                <td class="$QData{"Class"}" align="left" width="210">
+<!-- dtl:block:MonthWeek -->
+                  <i>($Text{"CW"} $QData{"CalendarWeek"})</i><br>
+<!-- dtl:block:MonthWeek -->
+<!-- dtl:block:MonthNotice -->
+                  ($Text{"$QData{"Info"}"})<br>
+<!-- dtl:block:MonthNotice -->
+<!-- dtl:block:MonthInfo -->
+                  $QData{"Info"}
+<!-- dtl:block:MonthInfo -->
+<!-- dtl:block:MonthEventPublic -->
+                  <table border="0" cellspacing="0" cellpadding="2" width="100%">
+                    <tr>
+                      <td class="$QData{"State"}">
+#                        o <b><a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Update&EventID=$QData{"EventID"}" title="($TimeShort{"$Data{"StartTime"}"} - $TimeShort{"$Data{"EndTime"}"}) $QData{"Title","80"}">$QData{"Title","22"}</a></b>
+                        o <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Update&EventID=$QData{"EventID"}" title="($TimeShort{"$Data{"StartTime"}"} - $TimeShort{"$Data{"EndTime"}"}) $QData{"Title","120"}">$QData{"Title","36"}</a>
+                      </td>
+                    </tr>
+                  </table>
+<!-- dtl:block:MonthEventPublic -->
+<!-- dtl:block:MonthEventPrivate -->
+                  <table border="0" cellspacing="0" cellpadding="2" width="100%">
+                    <tr>
+                      <td class="$QData{"State"}">
+                        <i>
+                        o <div title="($TimeShort{"$Data{"StartTime"}"} - $TimeShort{"$Data{"EndTime"}"}) &gt;$Text{"private"} $QData{"UserFirstname","80"} $QData{"UserLastname","80"}&lt;">
+                        <font color="#565656">
+                        <b>&gt;$Text{"private"} $QData{"UserFirstname","80"} $QData{"UserLastname","80"}&lt;</b>
+                        </font>
+                        </div>
+                        </i>
+                      </td>
+                    </tr>
+                  </table>
+<!-- dtl:block:MonthEventPrivate -->
+                  $Data{"DayInfoFinish"}
+                </td>
+              </tr>
+<!-- dtl:block:MonthDay -->
+            </table>
+          </td>
+<!-- dtl:block:Month -->
+<!-- dtl:block:Day -->
+          <td valign="top" width="$QData{"Width"}%">
+            <table border="0" cellspacing="2" cellpadding="2" width="100%">
+              <tr>
+                <th colspan="2" class="contenthead"><h5>$Text{"$QData{"DayString"}"} $QData{"Day"} $Text{"$QData{"MonthString"}"} $QData{"Year"}</th>
+              </tr>
+<!-- dtl:block:DayHour -->
+              <tr>
+                <td class="$QData{"Class"}">
+# check rw/ro access
+                  <dtl set $Data{"New"} = "$QData{"Hour"}::00">
+                  <dtl if ($Env{"AccessRw"} eq "1") { $Data{"New"} = "<a href="$Env{"Baselink"}Action=AgentCalendar&Subaction=Create&Year=$QData{"Year"}&Month=$QData{"Month"}&Day=$QData{"Day"}&Hour=$QData{"Hour"}&Minute=$QData{"Minute"}" title="$Text{"New Event..."}">$QData{"Hour"}:00</a>"; }>
+                  $Data{"New"}
+                </td>
+                <td class="$QData{"Class"}" align="left" width="200">
+<!-- dtl:block:DayWeek -->
+                  <i>($Text{"CW"} $QData{"CalendarWeek"})</i><br>
+<!-- dtl:block:DayWeek -->
+<!-- dtl:block:DayNotice -->
+                  ($Text{"$QData{"Info"}"})<br>
+<!-- dtl:block:DayNotice -->
+<!-- dtl:block:DayInfo -->
+                  $QData{"Info"}
+<!-- dtl:block:DayInfo -->
+<!-- dtl:block:DayEventPublic -->
+                  <table border="0" cellspacing="0" cellpadding="2" width="100%">
+                    <tr>
+                      <td class="$QData{"State"}">
+                        o <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Update&EventID=$QData{"EventID"}" title="($TimeShort{"$Data{"StartTime"}"} - $TimeShort{"$Data{"EndTime"}"}) $QData{"Title","80"}">$QData{"Title","16"}</a>
+                      </td>
+                    </tr>
+                  </table>
+<!-- dtl:block:DayEventPublic -->
+<!-- dtl:block:DayEventPrivate -->
+                  <table border="0" cellspacing="0" cellpadding="2" width="100%">
+                    <tr>
+                      <td class="$QData{"State"}">
+                        <i>
+                        o <div title="($TimeShort{"$Data{"StartTime"}"} - $TimeShort{"$Data{"EndTime"}"}) &gt;$Text{"Private"} $QData{"UserFirstname","80"} $QData{"UserLastname","80"}&lt;">
+                          <font color="#565656">&gt;$Text{"Private"} $QData{"UserFirstname","80"} $QData{"UserLastname","80"}&lt;</font>
+                          </div>
+                          </i>
+                      </td>
+                    </tr>
+                  </table>
+<!-- dtl:block:DayEventPrivate -->
+                  $Data{"DayInfoFinish"}
+                </td>
+              </tr>
+<!-- dtl:block:DayHour -->
+            </table>
+          </td>
+<!-- dtl:block:Day -->
+        </tr>
+      </table>
+      </center>
+    </td>
+  </tr>
+</table>
+<!-- dtl:block:Overview -->

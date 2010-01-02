@@ -1,0 +1,142 @@
+# --
+# Login.dtl - provides HTML login screen
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# --
+# $Id: Login.dtl,v 1.36 2009/03/03 17:05:49 martin Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+#
+# http headers
+Content-Type: text/html; charset=$Env{"UserCharset"};
+X-Powered-By: $Config{"Product"} $Config{"Version"} - Open Ticket Request System (http://otrs.org)
+
+# include Copyright.dtl
+$Include{"Copyright"}
+# --
+<html>
+<head>
+  <link rel="shortcut icon" href="$Config{"Frontend::ImagePath"}product.ico" type="image/ico"/>
+  <title>$Config{"ProductName"} :: $Text{"$Data{"Title"}"}</title>
+# include css file
+  <link href="$Config{"Frontend::CSSPath"}Standard/agent.css" rel="stylesheet" type="text/css"/>
+</head>
+<!-- end header -->
+<body onLoad="document.login.User.focus();">
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function submit_form() {
+#    if (!document.login.User.value) {
+#        alert('$JSText{"Login is needed!"}');
+#        return false;
+#    }
+#    else if (!document.login.Password.value) {
+#        alert('$JSText{"Password is needed!"}');
+#        return false;
+#    }
+
+    now = new Date();
+    Diff = now.getTimezoneOffset();
+    document.login.TimeOffset.value = Diff;
+
+    return true;
+}
+//-->
+</script>
+
+<center>
+<p>
+  <font color="red">$Text{"$Data{"Message"}"}</font>
+</p>
+<p>
+  <form action="$Env{"CGIHandle"}" method="post" enctype="application/x-www-form-urlencoded" name="login">
+    <input type="hidden" name="Action" value="Login"/>
+    <input type="hidden" name="RequestedURL" value="$QData{"RequestedURL"}"/>
+    <input type="hidden" name="Lang" value="$Env{"UserLanguage"}"/>
+    <input type="hidden" name="TimeOffset" value=""/>
+    <table border="0" cellspacing="0" cellpadding="3" width="280">
+      <tr>
+        <td align="center" class="singleboxhead">$Text{"Welcome to %s", "$Config{"ProductName"}"}</td>
+      </tr>
+      <tr>
+        <td align="center" class="singleboxbody">
+          <table cellspacing="8" cellpadding="2">
+            <tr>
+              <td class="singleboxkey">$Text{"User"}:</td>
+              <td class="singleboxvalue"><input type="text" name="User" value="$QData{"User"}" size="18"/></td>
+            </tr>
+            <tr>
+              <td class="singleboxkey">$Text{"Password"}:</td>
+              <td class="singleboxvalue"><input type="password" name="Password" size="18"/></td>
+            </tr>
+          </table>
+          <input class="button" type="submit" value="$Text{"Login"}" onclick="return submit_form();"/>
+        </td>
+      </tr>
+    </table>
+  </form>
+</p>
+# --
+# language
+# --
+<p>
+  <form action="$Env{"CGIHandle"}" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="hidden" name="Action" value=""/>
+    <input type="hidden" name="RequestedURL" value="$QData{"RequestedURL"}"/>
+    <table border="0" cellspacing="0" cellpadding="3" width="280">
+      <tr>
+        <td align="center" class="singleboxhead">$Text{"Language"}</td>
+      </tr>
+      <tr>
+        <td align="center" class="singleboxbody">
+          <table cellspacing="8" cellpadding="2">
+            <tr>
+              <td class="singleboxkey">$Text{"Language"}:</td>
+              <td class="singleboxvalue">$Data{"Language"}</td>
+            </tr>
+          </table>
+          <input class="button" type="submit" value="$Text{"Submit"}"/>
+        </td>
+      </tr>
+    </table>
+  </form>
+</p>
+<!-- dtl:block:LostPassword -->
+<p>
+  <center>
+  <table border="0" cellspacing="0" cellpadding="3" width="280">
+    <tr>
+      <td align="center" class="singleboxhead">$Text{"Lost your password?"}</td>
+    </tr>
+    <tr>
+      <td align="center" class="singleboxbody">
+        <i class="small">($Text{"Request new password"})</i>
+        <form action="$Env{"CGIHandle"}" method="post" enctype="application/x-www-form-urlencoded">
+          <input type="hidden" name="Action" value="LostPassword"/>
+          <input type="hidden" name="Lang" value="$Env{"UserLanguage"}"/>
+          <table cellspacing="8" cellpadding="2">
+            <tr>
+              <td class="singleboxkey">$Text{"User"}:</td>
+              <td class="singleboxvalue"><input type="text" name="User" value="" size="18"/></td>
+            </tr>
+          </table>
+          <input class="button" type="submit" value="$Text{"Submit"}"/>
+        </form>
+      </td>
+    </tr>
+  </table>
+  </center>
+</p>
+<!-- dtl:block:LostPassword -->
+# --
+# Message of the day data!
+# --
+$Data{"Motd"}
+</center>
+<!-- start footer -->
+</body>
+</html>
+<!-- end footer -->

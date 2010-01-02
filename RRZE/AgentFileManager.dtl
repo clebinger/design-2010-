@@ -1,0 +1,69 @@
+# --
+# AgentFileManager.dtl - provides HTML form for AgentFileManager
+# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# --
+# $Id: AgentFileManager.dtl,v 1.8 2009/05/22 11:27:41 tt Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+<!-- dtl:block:View -->
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+  <tr>
+    <td class="mainhead">
+      $Env{"Box0"}$Text{"File-Manager"}: $Data{"Location"}$Env{"Box1"}
+    </td>
+  </tr>
+  <tr>
+    <td class="mainbody">
+      <table border="0" width="100%" cellspacing="0" cellpadding="3">
+        <tr class="contentbody">
+          <td class="contentkey">$Text{"Name"}</td>
+          <td class="contentkey" width="100">$Text{"Size"}</td>
+          <td class="contentkey" width="100">$Text{"Action"}</td>
+        </tr>
+
+<!-- dtl:block:ParentDirectory -->
+        <tr class="$QData{"Css"}">
+          <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&Location=$LQData{"File"}" title="$Text{"$LQData{"Name"}"}"><img src="$Env{"Images"}filemanager_back.png" style="margin-right: 5px; border:0"/>$Text{"$QData{"NameShown","110"}"}</a> $QData{"Count"}</td>
+          <td>$Text{"Directory"}</td>
+          <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&Location=$LQData{"Location"}&RmDir=$LQData{"File"}">$Text{"$QData{"Delete"}"}</a></td>
+        </tr>
+<!-- dtl:block:ParentDirectory -->
+
+<!-- dtl:block:Directory -->
+        <tr class="$QData{"Css"}">
+          <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&Location=$LQData{"File"}" title="$LQData{"Name"}"><img src="$Env{"Images"}filemanager_folder2.png" style="margin-right: 5px; border:0"/>$QData{"NameShown","110"}</a> $QData{"Count"}</td>
+          <td>$Text{"Directory"}</td>
+          <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&Location=$LQData{"Location"}&RmDir=$LQData{"File"}"><img src="$Env{"Images"}filemanager_remove.png" style="margin-right: 5px; border:0"/>$Text{"$QData{"Delete"}"}</a></td>
+        </tr>
+<!-- dtl:block:Directory -->
+<!-- dtl:block:File -->
+        <tr class="$QData{"Css"}">
+          <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&Location=$LQData{"File"}" title="$LQData{"Name"}"><img src="$Env{"Images"}filemanager_file2.png" style="margin-right: 5px; border:0"/>$QData{"NameShown","110"}</a></td>
+          <td>$QData{"Size"}</td>
+          <td><a href="$Env{"Baselink"}Action=$Env{"Action"}&Location=$LQData{"Location"}&RmFile=$LQData{"File"}"><img src="$Env{"Images"}filemanager_remove.png" style="margin-right: 5px; border:0"/>$Text{"$QData{"Delete"}"}</a></td>
+        </tr>
+<!-- dtl:block:File -->
+      </table>
+<!-- dtl:block:RwOptions -->
+      <hr>$Text{"Create Directory"}:
+      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="Action"   value="$Env{"Action"}">
+        <input type="hidden" name="Location" value="$QData{"Location"}">
+        <input type="text"   name="NewDir"   value="$QData{"NewDir"}" size="40">
+        <input class="button" type="submit" value="$Text{"Create"}">
+      </form>
+      <hr>$Text{"File Upload"}:
+      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="Action"   value="$Env{"Action"}">
+        <input type="hidden" name="Location" value="$QData{"Location"}">
+        <input name="file_upload" type="file" size="40" class="fixed">
+        <input class="button" type="submit" value="$Text{"Upload"}">
+      </form>
+<!-- dtl:block:RwOptions -->
+    </td>
+  </tr>
+</table>
+<!-- dtl:block:View -->
